@@ -7,7 +7,7 @@
 #### Login API:
 /api/login
 
-### Screenshots
+## Screenshots
 
 #### Register form
 <img src="/screenshots/Register.png">
