@@ -13,7 +13,7 @@ function Navbar() {
         e.preventDefault();
         axios.get('/sanctum/csrf-cookie').then(response => {
         axios.post(`api/logout`).then(res=>{
-            if(res.data.status==200){
+            if(res.data.status===200){
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("auth_name");
                 swal("Success",res.data.message,"success");

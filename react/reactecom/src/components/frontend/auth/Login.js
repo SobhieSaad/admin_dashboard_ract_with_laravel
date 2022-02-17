@@ -34,7 +34,11 @@ const loginSubmit= (e)=>{
                 localStorage.setItem("auth_token",res.data.token);
                 localStorage.setItem("auth_name",res.data.username);
                 swal("success",res.data.message,"success");
-                history.push("/");
+                if(res.data.role==='admin'){
+                    history.push("/admin/dashboard");
+                }else{
+                    history.push("/");
+                }
             }else if(res.data.status === 401) {
                  swal('Warning', res.data.message,'warning');
             }else{
