@@ -26,3 +26,6 @@
 
 #### Success login
 <img src="/screenshots/Success login.png">
+
+#### Admin add category
+<img src="/screenshots/Admin_add_category.png">
