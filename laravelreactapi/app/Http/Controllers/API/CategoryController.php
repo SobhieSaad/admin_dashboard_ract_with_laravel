@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
-{
-     public function store(Request $request)
+{ 
+
+    public function index(){
+        $category= Category::all();
+        return response()->json([
+            'status'=>200,
+            'category'=>$category
+        ]);
+    }
+    
+    public function store(Request $request)
     {
         $validator= Validator::make($request->all(),[
             'meta_title'=>'string|required|max:191',
