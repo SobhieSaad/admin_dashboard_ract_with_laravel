@@ -1,6 +1,6 @@
 import axios from "axios";
 import React,{useState,useEffect} from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import swal from "sweetalert";
 
 function EditCategory(props){

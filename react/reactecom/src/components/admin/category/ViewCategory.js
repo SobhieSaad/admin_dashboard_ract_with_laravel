@@ -13,7 +13,7 @@ function ViewCategory(){
 
     useEffect(()=>{
         axios.get(`api/view-category`).then(res=>{
-            if(res.status===2000){
+            if(res.status===200){
                 setCategoryList(res.data.category);
             }
             setLoading(false);
@@ -59,7 +59,7 @@ function ViewCategory(){
                     </td>
                 </tr>
             )
-        })
+        });
     }
     return(
         <div className="container px-4">
