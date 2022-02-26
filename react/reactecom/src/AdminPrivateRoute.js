@@ -29,11 +29,10 @@ function AdminPrivateRoute({...rest}){
         undefined,function axiosRetryInterceptor(err){
             if(err.response.status ===401){
                 swal("Unauthorized",err.response.data.message,"warning");
-                history.pushState('/');
+                history.push('/');
             }
             return Promise.reject(err);
-        }
-    );
+        });
 
     axios.interceptors.response.use(function(response){
 

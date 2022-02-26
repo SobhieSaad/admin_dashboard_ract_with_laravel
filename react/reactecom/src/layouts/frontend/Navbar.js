@@ -55,7 +55,13 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <Link className="nav-link active" aria-current="page" to="#">Home</Link>
+                    <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                    </li>
+                    <li className="nav-item">
+                    <Link className="nav-link" aria-current="page" to="/about">About</Link>
+                    </li>
+                    <li className="nav-item">
+                    <Link className="nav-link" aria-current="page" to="/contact">Contact</Link>
                     </li>
                     <li className="nav-item">
                     <Link className="nav-link" to="#">Collection</Link>
