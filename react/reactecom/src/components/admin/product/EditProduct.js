@@ -24,9 +24,7 @@ function EditProduct(props){
         original_price:'',
         quantity:'',
         brand:'',
-        featured:'',
-        popular:'',
-        status:''
+       
     });
 
     const [picture, setPicture] = useState([]);
@@ -39,6 +37,12 @@ function EditProduct(props){
 
     const handleImage =(e)=>{
         setPicture({image: e.target.files[0]});
+    }
+
+    const [allCheckBox,setChecBoxes] = useState([]);
+    const handleCheckBox =(e)=>{
+        e.persist();
+        setChecBoxes({...allCheckBox,[e.target.name]: e.target.checked});
     }
 
     useEffect(() => {
@@ -54,6 +58,7 @@ function EditProduct(props){
         if(res.data.status ===200)
         {
             setProduct(res.data.product);
+            setChecBoxes(res.data.product);
         }
         else if(res.data.status ===404)
         {
@@ -81,9 +86,9 @@ function EditProduct(props){
         formData.append('original_price',productInput.original_price);
         formData.append('quantity',productInput.quantity);
         formData.append('featured',productInput.featured);
-        formData.append('popular',productInput.popular);
-        formData.append('brand',productInput.brand);
-        formData.append('status',productInput.status);
+        formData.append('popular',allCheckBox.popular?'1':'0');
+        formData.append('brand',allCheckBox.brand?'1':'0');
+        formData.append('status',allCheckBox.status?'1':'0');
 
         const product_id=props.match.params.id;
 
@@ -209,15 +214,15 @@ function EditProduct(props){
                                 </div>
                                 <div className="col-md-4 form-group mb-3">
                                     <label>Featured (Checked-shown)</label>
-                                    <input type="checkbox" onChange={handleInput} value={productInput.featured} name="featured" className="w-50 h-50" />
+                                    <input type="checkbox" onChange={handleCheckBox} defaultChecked={allCheckBox.featured ===1? true:false } name="featured" className="w-50 h-50" />
                                 </div>
                                 <div className="col-md-4 form-group mb-3">
                                     <label>Popular (Checked-shown)</label>
-                                    <input type="checkbox" name="popular" onChange={handleInput} value={productInput.popular} className="w-50 h-50" />
+                                    <input type="checkbox" name="popular" onChange={handleCheckBox} defaultChecked={allCheckBox.popular===1? true:false} className="w-50 h-50" />
                                 </div>
                                 <div className="col-md-4 form-group mb-3">
                                     <label>Status (Checked-hidden)</label>
-                                    <input type="checkbox" name="status" onChange={handleInput} value={productInput.status} className="w-50 h-50" />
+                                    <input type="checkbox" name="status" onChange={handleCheckBox} defaultChecked={allCheckBox.status===1? true:false} className="w-50 h-50" />
                                 </div>
                             </div>
                             
