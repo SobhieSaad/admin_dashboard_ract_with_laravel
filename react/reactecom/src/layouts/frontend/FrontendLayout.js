@@ -13,7 +13,7 @@ const FrontendLayout= ()=>{
                         <Switch>
                             {PublicRouteList.map((routeData,idx)=>{
                                 return (
-                                    route.component && (
+                                    routeData.component && (
                                         <Route key={idx}  
                                         path={routeData.path}
                                         exact={routeData.exact}

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\FrontendController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::post('register',[AuthController::class,'register']);
 
 Route::post('login',[AuthController::class,'login']);
 
+Route::get('getCategory',[FrontendController::class,'category']);
 Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
     Route::get('/checkingAuthenticated',function(){
@@ -43,8 +45,9 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
     Route::get('view-product', [ProductController::class,'index']);
 
-    Route::get('edit-product/{id}'.[ProductController::class,'edit']);
-    Route::post('update-product/{id}'.[ProductController::class,'update']);
+    Route::get('edit-product/{id}',[ProductController::class,'edit']);
+
+    Route::post('update-product/{id}',[ProductController::class,'update']);
 
 });
 

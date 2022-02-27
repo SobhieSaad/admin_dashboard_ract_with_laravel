@@ -24,8 +24,6 @@ axios.interceptors.request.use(function(config){
       <Switch>
             <AdminPrivateRoute path="/admin"  name="Admin"  />
             <PublicRoute path="/" name="Home" />
-            <Route path="/403" component={Page403} />
-            <Route path="/404" component={Page404} />
             <Route path="/login">
               {localStorage.getItem('auth_token')? <Redirect to='/'></Redirect>: <Login />}
             </Route>
