@@ -6,7 +6,7 @@ import Page404 from "../components/errors/Page404";
 import Login from "../components/frontend/auth/Login";
 import Register from "../components/frontend/auth/Register";
 import ViewCategory from '../components/frontend/collections/ViewCategory';
-
+import ViewProduct from '../components/frontend/collections/ViewProduct';
 
 
 const PublicRouteList =[
@@ -18,7 +18,7 @@ const PublicRouteList =[
     { path: '/login', exact: true, name: 'Login', component: Login },
     { path: '/register', exact: true, name: 'Register', component: Register },
     { path: '/collections', exact: true, name: 'ViewCategory', component: ViewCategory },
-
+    { path: '/collections/:slug', exact: true, name: 'ViewProduct', component: ViewProduct },
 
 ];
 
