@@ -7,6 +7,7 @@ import Login from "../components/frontend/auth/Login";
 import Register from "../components/frontend/auth/Register";
 import ViewCategory from '../components/frontend/collections/ViewCategory';
 import ViewProduct from '../components/frontend/collections/ViewProduct';
+import ProductDetail from '../components/frontend/collections/ProductDetail';
 
 
 const PublicRouteList =[
@@ -19,6 +20,7 @@ const PublicRouteList =[
     { path: '/register', exact: true, name: 'Register', component: Register },
     { path: '/collections', exact: true, name: 'ViewCategory', component: ViewCategory },
     { path: '/collections/:slug', exact: true, name: 'ViewProduct', component: ViewProduct },
+    { path: '/collections/:category/:product', exact: true, name: 'ProductDetail', component: ProductDetail },
 
 ];
 
