@@ -11,7 +11,6 @@ function ViewProduct(props){
     const [category,setCategory]=useState([]);
     const history= useHistory();
 
-    const prodcutCount=product.length;
 
     useEffect(()=>{
 
@@ -22,7 +21,7 @@ function ViewProduct(props){
             {
                 if(res.data.status===200)
                 {
-                    setProduct(res.data.product_data.prodcut);
+                    setProduct(res.data.product_data.product);
                     setCategory(res.data.product_data.category);
                     setLoading(false);
                 }
@@ -39,8 +38,8 @@ function ViewProduct(props){
                 
             }
         });
-        return ()=>{isMounted=false}
-    },[props.map.params.slug,history])
+        return ()=>{isMounted=false};
+    },[props.match.params.slug,history])
 
 
     if(loading)
@@ -49,6 +48,7 @@ function ViewProduct(props){
     }
     else
     {
+        const prodcutCount=product.length;
         var showProductList='';
         if(prodcutCount){
         showProductList=product.map((item,idx)=>{

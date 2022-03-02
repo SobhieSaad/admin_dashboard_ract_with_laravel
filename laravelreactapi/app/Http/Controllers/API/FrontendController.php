@@ -66,10 +66,8 @@ class FrontendController extends Controller
             {
                 return response()->json([
                     'status'=>200,
-                    'product_data'=>[
                         'product'=>$product,
                         'category'=>$category
-                    ]
                 ]);
             }
             else

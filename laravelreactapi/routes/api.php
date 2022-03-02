@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\FrontendController;
 use App\Http\Controllers\API\ProductController;
@@ -22,9 +23,10 @@ Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login']);
 
 Route::get('getCategory',[FrontendController::class,'category']);
-Route::get('fetchProducts/{slug}',[FrontendController::class,'product']);
+Route::get('fetchProducts/{prodcut_slug}',[FrontendController::class,'product']);
 Route::get('view-product-normal-user/{category_slug}/{product_slug}',[FrontendController::class,'show']);
 
+Route::post('add-to-cart',[CartController::class,'addToCart']);
 
 Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
