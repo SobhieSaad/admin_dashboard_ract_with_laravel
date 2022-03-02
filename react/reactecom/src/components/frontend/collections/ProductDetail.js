@@ -22,7 +22,7 @@ function ProductDetail(props){
             {
                 if(res.data.status===200)
                 {
-                    setProduct(res.data.prodcut);
+                    setProduct(res.data.product);
                     setLoading(false);
                 }
                 else if(res.data.status===404)
@@ -34,7 +34,7 @@ function ProductDetail(props){
             }
         });
         return ()=>{isMounted=false}
-    },[props.map.params.prodcut,props.map.params.category,history])
+    },[props.match.params.prodcut,props.match.params.category,history])
 
 
     //no less than 1 - Hooks start
@@ -50,6 +50,35 @@ function ProductDetail(props){
         setQTY(prevCount=>prevCount + 1);
         }
     }
+
+    const submitAddProductToCart =(e)=>{
+        e.preventDefault();
+
+        const data={
+            product_id: product.id,
+            product_qty: qty,
+        }
+
+        axios.post(`/api/add-to-cart`,data).then(res=>{
+            if(res.data.status ===201)
+            {
+                swal("Success",res.data.message,"success")
+            }
+            else if(res.data.status === 409)
+            {
+                swal("Warning",res.data.message,"warning")
+            }
+            else if(res.data.status === 401)
+            {               
+                 swal("Warning",res.data.message,"warning")
+            }
+            else if(res.data.status === 404)
+            {               
+                 swal("Warning",res.data.message,"warning")
+            }
+        });
+
+    }
     if(loading)
     {
         return <h5>Loading...</h5>
@@ -58,6 +87,7 @@ function ProductDetail(props){
     {
 
         var available='';
+        console.log(product);
         if(product.quantity >0)
         {
         available= <div>
@@ -66,13 +96,13 @@ function ProductDetail(props){
                     <div className="col-md-3 mt-3">
                         <div className="input-group">
                             <button type="button" onClick={handleDecrement} className="input-group-text">-</button>
-                            <div className="form-control text-center">{quantity}</div>
+                            <div className="form-control text-center">{qty}</div>
                             <button type="button" onClick={handleIncrement} className="input-group-text">+</button>
                         </div>
 
                     </div>
                     <div className="col-md-3 mt-3">
-                        <button type="button" className="btn btn-primary w-100">Add To cart</button>
+                        <button type="button" className="btn btn-primary w-100" onClick={submitAddProductToCart}>Add To cart</button>
                     </div>
                 </div>
         </div>
