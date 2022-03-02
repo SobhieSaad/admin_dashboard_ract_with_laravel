@@ -29,7 +29,7 @@ class FrontendController extends Controller
             if($product)
             {
                 return response()->json([
-                    'status'=>202,
+                    'status'=>200,
                     'product_data'=>[
                         'product'=>$product,
                         'category'=>$category
@@ -40,6 +40,42 @@ class FrontendController extends Controller
             {
                 return response()->json([
                     'status'=>400,
+                    'message'=>'No product found'
+                ]);
+            }
+        }
+        else
+        {
+            return response()->json([
+                'status'=>404,
+                'message'=>'No such category is found'
+            ]);
+        }
+    }
+
+    public function show($category_slug,$product_slug)
+    {
+        $category=Category::where('slug',$category_slug)->where('status',0)->first();
+
+        if($category)
+        {
+            $product= Product::where('category_id',$category->id)
+            ->where('slug',$product_slug)->where('status',0)->first();
+
+            if($product)
+            {
+                return response()->json([
+                    'status'=>200,
+                    'product_data'=>[
+                        'product'=>$product,
+                        'category'=>$category
+                    ]
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status'=>404,
                     'message'=>'No product found'
                 ]);
             }
