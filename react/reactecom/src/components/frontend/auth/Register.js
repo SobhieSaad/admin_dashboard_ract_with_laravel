@@ -49,7 +49,7 @@ function Register() {
 
     return(
             <div>
-                <Navbar/>
+              
                 <div className='container py-5'>
                     <div className='row justify-content-center'>
                         <div className='col-md-6'>
@@ -70,7 +70,7 @@ function Register() {
                                         </div>
                                         <div className='form-group mb-3'>
                                             <label>Password</label>
-                                            <input type='' name="password" onChange={handleInput} value={registerInput.password} className='form-control' ></input>
+                                            <input type='password' name="password" onChange={handleInput} value={registerInput.password} className='form-control' ></input>
                                             <span>{registerInput.error_list?.password}</span>
                                         </div>
                                         
