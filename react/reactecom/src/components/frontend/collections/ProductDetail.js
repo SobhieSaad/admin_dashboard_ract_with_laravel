@@ -87,7 +87,7 @@ function ProductDetail(props){
     {
 
         var available='';
-        console.log(product);
+        
         if(product.quantity >0)
         {
         available= <div>
