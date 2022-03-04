@@ -27,6 +27,7 @@ Route::get('fetchProducts/{prodcut_slug}',[FrontendController::class,'product'])
 Route::get('view-product-normal-user/{category_slug}/{product_slug}',[FrontendController::class,'show']);
 
 Route::post('add-to-cart',[CartController::class,'addToCart']);
+Route::get('cart',[CartController::class,'getCartDetails']);
 
 Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
