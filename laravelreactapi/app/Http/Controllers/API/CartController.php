@@ -86,7 +86,7 @@ class CartController extends Controller
         if(auth('sanctum')->check())
         {
             $user_id=auth('sanctum')->user()->id;
-            $cart= Cart::where('cart_id',$cart_id)->where('user_id',$user_id)->first();
+            $cart= Cart::where('id',$cart_id)->where('user_id',$user_id)->first();
             if($scope ==="dec")
             {
                 $cart->product_qty--;
@@ -114,7 +114,7 @@ class CartController extends Controller
         if(auth('sanctum')->check())
         {
             $user_id=auth('sanctum')->user()->id;
-            $cart= Cart::where('cart_id',$cart_id)->where('user_id',$user_id)->first();
+            $cart= Cart::where('id',$cart_id)->where('user_id',$user_id)->first();
             if($cart)
             {
                 $cart->delete();
