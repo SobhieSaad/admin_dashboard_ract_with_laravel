@@ -9,10 +9,35 @@ function Cart(){
     const [loading,setLoading]=useState(true);
     const history= useHistory();
     const [cart,setCart]=useState([]);
-
+    var totalCartPrice=0;
     if(!localStorage.getItem("auth_token")){
         history.push('/');
         swal("Warning","Login first to view cart details","error");
+    }
+    const handleDecrement =(cart_id)=>{
+        setCart(cart =>{
+            cart.map( (item)=>{
+                cart_id === item.id ? {...item,product_qty: item.product_qty - (item.product_qty >1 ?1 :0)} : item
+            })
+        });
+        updateCartQuanity(cart_id,"dec")
+    }
+
+    const handleIncrement = (cart_id) =>{
+        setCart(cart =>{
+            cart.map( (item)=>{
+                cart_id === item.id ? {...item,product_qty: item.product_qty + (item.product_qty <10 ?1:0)} : item
+            })
+        });
+        updateCartQuanity(cart_id,"inc")
+    }
+
+    function updateCartQuanity(cart_id,scope){
+        axios.put(`api/cart-updatequantity/${cart_id}/${scope}`).then(res=>{
+            if(res.data.status === 200){
+                //=swal
+            }
+        })
     }
     useEffect(()=>{
 
@@ -37,6 +62,22 @@ function Cart(){
         return ()=>{isMounted=false}
     },[history]);
 
+    const deleteCartItem = (e,cart_id)=>{
+        e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText ="Removing";
+        axios.delete(`/api/delet-cartitem/${cart_id}`).then(res=>{
+            if(res.data.status===200)
+            {
+                thisClicked.closest('tr').remove();
+            }
+            else if(res.data.status=== 404)
+            {
+                swal('Warning',res.data.message,'error');
+                thisClicked.innerText ="Remove";
+            }
+        })
+    }
 
     if(loading)
     {
@@ -58,6 +99,8 @@ function Cart(){
         </thead>
         <tbody>
             {cart.map((item)=>{
+                
+                totalCartPrice += item.product.selling_price * item.product_qty;
                 return(
                     <tr>
                         <td width="10%">
@@ -67,14 +110,14 @@ function Cart(){
                         <td width="15%" className="text-center">{item.product.selling_price}</td>
                         <td width="15%">
                             <div className="input-group">
-                                <button type="button" className="input-group-text">-</button>
+                                <button type="button" className="input-group-text" onClick={()=>handleDecrement(item.id)}>-</button>
                                 <div className="form-control text-center">{item.product_qty}</div>
-                                <button type="button" className="input-group-text">+</button>
+                                <button type="button" className="input-group-text"  onClick={()=>handleIncrement(item.id)}>+</button>
                             </div>
                         </td>
                         <td width="15%" className="text-center">{item.product.selling_price * item.product_qty}</td>
                         <td width="10%">
-                            <button type="button" className="btn btn-danger btn-sm">Remove</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={(e)=>deleteCartItem(item.id)}>Remove</button>
                         </td>
                     </tr>
               )
@@ -103,6 +146,19 @@ function Cart(){
                     <div className="row">
                         <div className="col-md-12">
                           {cart_HTML}
+                        </div>
+                        <div className="col-md-8"></div>
+                        <div className="col-md-4">
+                            <div className="card card-body mt-3">
+                                <h4>Sub total:
+                                    <span className="float-end">{totalCartPrice}</span>
+                                </h4>
+                                <h4>Grand total:
+                                    <span className="float-end">{totalCartPrice}</span>
+                                </h4>
+                                <hr/>
+                                <Link to="/checkout" className="btn btn-primary">Checkout</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
