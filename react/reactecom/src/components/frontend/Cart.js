@@ -14,28 +14,28 @@ function Cart(){
         history.push('/');
         swal("Warning","Login first to view cart details","error");
     }
-    const handleDecrement =(cart_id)=>{
-        setCart(cart =>{
-            cart.map( (item)=>{
-                cart_id === item.id ? {...item,product_qty: item.product_qty - (item.product_qty >1 ?1 :0)} : item
-            })
-        });
-        updateCartQuanity(cart_id,"dec")
+    const handleDecrement = (cart_id)=>{
+        setCart(cart =>
+            cart.map( (item) =>
+                cart_id === item.id ? {...item, product_qty: item.product_qty - (item.product_qty > 1 ? 1 :0) } : item
+            )
+        );
+        updateCartQuanity(cart_id,"dec");
     }
 
     const handleIncrement = (cart_id) =>{
-        setCart(cart =>{
-            cart.map( (item)=>{
-                cart_id === item.id ? {...item,product_qty: item.product_qty + (item.product_qty <10 ?1:0)} : item
-            })
-        });
+        setCart(cart =>
+            cart.map( (item) =>
+                cart_id === item.id ? {...item, product_qty: item.product_qty + (item.product_qty < 10 ? 1:0)} : item
+            )
+        );
         updateCartQuanity(cart_id,"inc")
     }
 
     function updateCartQuanity(cart_id,scope){
         axios.put(`api/cart-updatequantity/${cart_id}/${scope}`).then(res=>{
             if(res.data.status === 200){
-                //=swal
+                
             }
         })
     }
@@ -86,7 +86,7 @@ function Cart(){
     var cart_HTML='';
     if(cart.length >0)
     {
-        cart_HTML=  <div className="table table-responsive">
+        cart_HTML=  <table className="table table-responsive table-stiped table-bordered">
         <thead>
             <tr>
                 <th>Image</th>
@@ -98,11 +98,11 @@ function Cart(){
             </tr>
         </thead>
         <tbody>
-            {cart.map((item)=>{
+            {cart.map((item,idx)=>{
                 
                 totalCartPrice += item.product.selling_price * item.product_qty;
                 return(
-                    <tr>
+                    <tr key={idx}>
                         <td width="10%">
                             <img src={`http://localhost:8000/${item.product.image}`} alt={item.product.name} width="50px" height="50px" />
                         </td>
@@ -117,13 +117,13 @@ function Cart(){
                         </td>
                         <td width="15%" className="text-center">{item.product.selling_price * item.product_qty}</td>
                         <td width="10%">
-                            <button type="button" className="btn btn-danger btn-sm" onClick={(e)=>deleteCartItem(item.id)}>Remove</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={(e)=>deleteCartItem(e,item.id)}>Remove</button>
                         </td>
                     </tr>
               )
             })}
         </tbody>
-    </div>
+    </table>
     }
     else
     {
