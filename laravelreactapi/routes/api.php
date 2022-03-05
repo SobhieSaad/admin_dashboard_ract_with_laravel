@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CheckoutController;
 use App\Http\Controllers\API\FrontendController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ Route::post('add-to-cart',[CartController::class,'addToCart']);
 Route::get('cart',[CartController::class,'getCartDetails']);
 Route::put('cart-updatequantity/{cart_id}/{scope}',[CartController::class,'updateCartQuantity']);
 Route::delete('delet-cartitem/{cart_id}',[CartController::class,'deleteCartItem']);
+
+ROute::post('place-order',[CheckoutController::class,'placeOrder']);
 Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
     Route::get('/checkingAuthenticated',function(){
