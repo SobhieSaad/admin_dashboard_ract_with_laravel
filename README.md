@@ -13,11 +13,13 @@ form here get the API_KEY: https://dashboard.razorpay.com/signup
 form here get the JS code to implement: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/build-integration/
 
 #### Note: make sure to add "window" prefix in tis line:
+```
 var rzp1 = new Razorpay(options);
-
+```
 to be
+```
 var rzp1 = new window.Razorpay(options);
-
+```
 <hr/>
 
 #### 2- Pay Pal payment:
