@@ -57,7 +57,7 @@ function Checkout(){
         setCheckoutInput({...checkoutInput,[e.target.name]: e.target.value});
     }
 
-    const submitOrder =(e)=>{
+    const submitOrder =(e,paymentMode)=>{
         e.preventDefault();
         const data={
             firstname: checkoutInput.firstname,
@@ -67,22 +67,76 @@ function Checkout(){
             address: checkoutInput.address,
             city: checkoutInput.city,
             state: checkoutInput.state,
-            zipcode: checkoutInput.zipcode
+            zipcode: checkoutInput.zipcode,
+            paymentMode:paymentMode,
+            payment_id:''
         }
 
-        axios.post(`/api/place-order`,data).then(res=>{
-            if(res.data.status===200)
-            {
-                swal("Order placed successfully", res.data.message,'success');
-                setErrors([]);
-                history.push('/thank-you')
-            }
-            else if(res.data.status === 422)
-            {
-                swal("Error fields required","", 'error')
-                setErrors(res.data.errors);
-            }
-        })
+        switch(paymentMode)
+        {
+            case 'cod':
+                axios.post(`/api/place-order`,data).then(res=>{
+                    if(res.data.status===200)
+                    {
+                        swal("Order placed successfully", res.data.message,'success');
+                        setErrors([]);
+                        history.push('/thank-you')
+                    }
+                    else if(res.data.status === 422)
+                    {
+                        swal("Error fields required","", 'error')
+                        setErrors(res.data.errors);
+                    }
+                })
+            break;
+            case 'razorpay':
+                axios.post(`/api/validate-order`,data).then(res=>{
+                    if(res.data.status === 200)
+                    {
+                        setErrors([]); 
+                        var options = {
+                            "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
+                            "amount": (totalCartPrice * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                            "name": "Company name",
+                            "description": "Test Transaction",
+                            "image": "https://example.com/your_logo",
+                            "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                            "handler": function (response){
+                                data.payment_id=response.razorpay_payment_id;
+                                axios.post(`/api/place-order`,data).then(res=>{
+                                    if(res.data.status===200)
+                                    {
+                                        swal("Order placed successfully", res.data.message,'success');
+                                        setErrors([]);
+                                        history.push('/thank-you')
+                                    }
+                                    
+                                })
+                            },
+                            "prefill": {
+                                "name": data.firstname + data.lastname,
+                                "email": data.email,
+                                "contact": data.phone
+                            },
+                            "theme": {
+                                "color": "#3399cc"
+                            }
+                        };
+                        var rzp = new window.Razorpay(options); 
+                        rzp.open();                  
+                    }
+                    else if(res.data.status === 422)
+                    {
+                        swal("Error fields required","", 'error')
+                        setErrors(res.data.errors);
+                    }
+                })
+            break;
+
+            default:
+
+            break;
+        }
     }
     if(loading)
     {
@@ -160,8 +214,10 @@ function Checkout(){
                                         </div>
                                         <div className="col-md-12">
                                             <div className="form-group text-end">
-                                                <button type="button" className="btn btn-primary">Place Order</button>
+                                                <button type="button" className="btn btn-primary mx-1" onClick={(e)=>submitOrder(e,'cod')}>Place Order</button>
+                                                <button type="button" className="btn btn-primary mx-1" onClick={()=>submitOrder(e,'razorpay')}>Pay Online</button>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +250,7 @@ function Checkout(){
                                         <td colSpan="2" className="text-end fw-bold">
                                             Grand Total
                                         </td>
-                                        <td colSpan="2" className="text-end fw-bold" onClick={submitOrder}>{totalCartPrice}</td>
+                                        <td colSpan="2" className="text-end fw-bold">{totalCartPrice}</td>
                                     </tr>
 
                                 </tbody>
