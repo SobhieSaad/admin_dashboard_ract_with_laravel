@@ -32,7 +32,9 @@ Route::get('cart',[CartController::class,'getCartDetails']);
 Route::put('cart-updatequantity/{cart_id}/{scope}',[CartController::class,'updateCartQuantity']);
 Route::delete('delet-cartitem/{cart_id}',[CartController::class,'deleteCartItem']);
 
-ROute::post('place-order',[CheckoutController::class,'placeOrder']);
+Route::post('place-order',[CheckoutController::class,'placeOrder']);
+Route::post('validate-order',[CheckoutController::class,'validateOrder']);
+
 Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
     Route::get('/checkingAuthenticated',function(){
