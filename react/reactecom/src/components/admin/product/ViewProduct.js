@@ -8,14 +8,21 @@ function ViewProduct(){
 
     const [loading, setLoading] = useState(true);
     useEffect(() => {
+        let isMounted= true;
         document.title="View product";
         axios.get(`api/view-product`).then(res=>{
-            if(res.data.status===200)
+            if(isMounted)
             {
-                setProduct(res.data.product);
-                setLoading(false);
+                if(res.data.status===200)
+                {
+                    setProduct(res.data.product);
+                    setLoading(false);
+                }
             }
-      })
+      });
+      return ()=>{
+          isMounted = false;
+      }
     }, []);
     
     var view_products='';

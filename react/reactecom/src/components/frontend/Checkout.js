@@ -1,4 +1,6 @@
 import axios from "axios";
+import  ReactDOM  from "react-dom";
+import bootstrap from "bootstrap";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
@@ -57,6 +59,53 @@ function Checkout(){
         setCheckoutInput({...checkoutInput,[e.target.name]: e.target.value});
     }
 
+    /////////////////////////////////
+    //PAYPAL CODE
+    const orderData={
+        firstname: checkoutInput.firstname,
+        lastname: checkoutInput.lastname,
+        phone: checkoutInput.phone,
+        email: checkoutInput.email,
+        address: checkoutInput.address,
+        city: checkoutInput.city,
+        state: checkoutInput.state,
+        zipcode: checkoutInput.zipcode,
+        paymentMode: 'Paid by PayPal',
+        payment_id:''
+    }
+    const PayPalButton= window.paypal.Button.driver('react',{React,ReactDOM});
+    const createOrder=(data,actions) =>{
+        return actions.order.create({
+            purchase_units:[
+                {
+                    amount: {
+                        value: totalCartPrice
+                    }
+                }
+            ]        
+    })
+    }
+    const onApprove = (data,actions) =>{
+        // return actions.order.capture();
+        return actions.order.capture().then(function(details){
+            orderData.payment_id = details.id;
+            axios.post(`/api/place-order`,orderData).then(res=>{
+                if(res.data.status===200)
+                {
+                    swal("Order placed successfully", res.data.message,'success');
+                    setErrors([]);
+                    history.push('/thank-you')
+                }
+                else if(res.data.status === 422)
+                {
+                    swal("Error fields required","", 'error')
+                    setErrors(res.data.errors);
+                }
+            })
+        });
+    }
+
+    /////////////////////////////////
     const submitOrder =(e,paymentMode)=>{
         e.preventDefault();
         const data={
@@ -132,7 +181,21 @@ function Checkout(){
                     }
                 })
             break;
-
+            case 'payonline':
+                axios.post(`/api/validate-order`,data).then(res=>{
+                    if(res.data.status === 200)
+                    {
+                        setErrors([]); 
+                        var myModal= new window.bootstrap.Modal(document.getElementById('payOnlineModal'));
+                        myModal.show();
+                    }
+                    else if(res.data.status === 422)
+                    {
+                        swal("Error fields required","", 'error')
+                        setErrors(res.data.errors);
+                    }
+                })
+                break;
             default:
 
             break;
@@ -216,6 +279,8 @@ function Checkout(){
                                             <div className="form-group text-end">
                                                 <button type="button" className="btn btn-primary mx-1" onClick={(e)=>submitOrder(e,'cod')}>Place Order</button>
                                                 <button type="button" className="btn btn-primary mx-1" onClick={()=>submitOrder(e,'razorpay')}>Pay Online</button>
+                                                <button type="button" className="btn btn-warning mx-1" onClick={()=>submitOrder(e,'payonline')}>Pay Pal</button>
+
                                             </div>
                                             
                                         </div>
@@ -268,6 +333,25 @@ function Checkout(){
     }
     return(
         <div>
+            {/* <!-- Modal --> */}
+            <div class="modal fade" id="payOnlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Online payment mode</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <hr/>
+                    <PayPalButton
+                        createOrder={(data,actions) => createOrder(data,actions)}
+                        onApprove={(data,actions) => onApprove(data,actions)}
+                    />
+                </div>
+
+                </div>
+            </div>
+            </div>
             <div className="py-3 bg-warning">
                 <div className="container">
                     <h6>Home/ Checkout</h6>
