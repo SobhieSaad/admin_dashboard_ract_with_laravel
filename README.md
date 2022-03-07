@@ -13,6 +13,10 @@ form here get the API_KEY: https://dashboard.razorpay.com/signup
 form here get the JS code to implement: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/build-integration/
 
 #### Note: make sure to add "window" prefix in tis line:
+Add script library in index.html:
+```
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+```
 ```
 var rzp1 = new Razorpay(options);
 ```
@@ -23,7 +27,14 @@ var rzp1 = new window.Razorpay(options);
 <hr/>
 
 #### 2- Pay Pal payment:
+Sign up for PayPal here https://www.paypal.com/
+then go to Business configuration to create Client ID
 
+Notes:
+Add script library in index.html:
+```
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+```
 
 
 <hr/>
