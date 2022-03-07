@@ -34,6 +34,11 @@ const SideBar= ()=>{
                                     <Link className="nav-link" to="/admin/view-product">View product</Link>
                                 </nav>
                             </div>
+
+                            <Link className="nav-link" to="/admin/orders">
+                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                                Orders
+                            </Link>
                             <div className="sb-sidenav-menu-heading">Interface</div>
                             <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>

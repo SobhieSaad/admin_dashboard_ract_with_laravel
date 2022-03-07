@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CheckoutController;
 use App\Http\Controllers\API\FrontendController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,8 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
 
     Route::post('update-product/{id}',[ProductController::class,'update']);
 
+    //Orders
+    Route::get('admin/orders',[OrderController::class,'index']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
