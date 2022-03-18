@@ -1,6 +1,5 @@
 import axios from "axios";
 import  ReactDOM  from "react-dom";
-import bootstrap from "bootstrap";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
@@ -278,8 +277,8 @@ function Checkout(){
                                         <div className="col-md-12">
                                             <div className="form-group text-end">
                                                 <button type="button" className="btn btn-primary mx-1" onClick={(e)=>submitOrder(e,'cod')}>Place Order</button>
-                                                <button type="button" className="btn btn-primary mx-1" onClick={()=>submitOrder(e,'razorpay')}>Pay Online</button>
-                                                <button type="button" className="btn btn-warning mx-1" onClick={()=>submitOrder(e,'payonline')}>Pay Pal</button>
+                                                <button type="button" className="btn btn-primary mx-1" onClick={(e)=>submitOrder(e,'razorpay')}>Pay Online</button>
+                                                <button type="button" className="btn btn-warning mx-1" onClick={(e)=>submitOrder(e,'payonline')}>Pay Pal</button>
 
                                             </div>
                                             
