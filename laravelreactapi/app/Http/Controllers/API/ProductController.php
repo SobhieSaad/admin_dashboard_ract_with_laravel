@@ -54,7 +54,7 @@ class ProductController extends Controller
                 $file=$request->file('image');
                 $extenstion=$file->getClientOriginalExtension();
                 $fileName=time().'.'.$extenstion;
-                $path='uploads/proucts/';
+                $path='uploads/products/';
                 $file->move($path,$fileName);
                 $product->image=$path.$fileName;
             }
@@ -113,7 +113,7 @@ class ProductController extends Controller
                     $file=$request->file('image');
                     $extenstion=$file->getClientOriginalExtension();
                     $fileName=time().'.'.$extenstion;
-                    $new_path='uploads/product/';
+                    $new_path='uploads/products/';
                     $file->move($new_path,$fileName);
                     $product->image=$new_path.$fileName;
                 }

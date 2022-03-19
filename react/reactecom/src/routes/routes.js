@@ -17,7 +17,7 @@ const routes =[
     { path: '/admin/view-category', exact: true, name: 'ViewCategory', component: ViewCategory },
     { path: '/admin/add-product', exact: true, name: 'AddProduct', component: AddProduct },
     { path: '/admin/view-product', exact: true, name: 'ViewProduct', component: ViewProduct },
-    { path: '/admin/edit-product', exact: true, name: 'EditProduct', component: EditProduct },
+    { path: '/admin/edit-product/:id', exact: true, name: 'EditProduct', component: EditProduct },
     { path: '/admin/orders', exact: true, name: 'Order', component: Order }
 
 

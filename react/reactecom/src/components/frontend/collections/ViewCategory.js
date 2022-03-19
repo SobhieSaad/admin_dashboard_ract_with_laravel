@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function ViewCategory(){
 
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(1);
     const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
@@ -34,9 +34,7 @@ function ViewCategory(){
             return (
                 <div className="col-md-4" key={idx}>
                 <div className="card">
-                    <Link >
-                        <img src="" className="w-100" alt={item.name} />
-                    </Link>
+                    
                     <div className="card-body">
                         <Link to={`collections/${item.slug}`}>
                             <h5>{item.name}</h5>

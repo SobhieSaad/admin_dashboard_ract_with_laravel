@@ -57,7 +57,7 @@ function ViewProduct(props){
                     <div className="card">
                         {/* relation ship in laravel */}
                         <Link to={`/collections/${item.category.slug}/${item.slug}`} >
-                        <img src={`http://localhost:8000/${item.image}`} className="w-100" alt={item.name} />
+                        <img src={`http://localhost:8000/${item.image}`} className="w-100" height="300px" alt={item.name} />
                         </Link>
                         <div className="card-body">
                             <Link to={`/collections/${item.category.slug}/${item.slug}`} >

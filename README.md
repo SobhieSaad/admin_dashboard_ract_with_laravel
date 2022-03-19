@@ -62,3 +62,24 @@ Add script library in index.html:
 
 #### Admin add category
 <img src="/screenshots/Admin_add_category.png">
+
+### Admin view categories
+<img src="/screenshots/admin category list.png">
+
+### Admin add product
+<img src="/screenshots/admin category list.png">
+
+### Admin view product
+<img src="/screenshots/admin product list.png">
+
+### Admin orders list
+<img src="/screenshots/admin order list.png">
+
+### Product detail
+<img src="/screenshots/product details.png">
+
+### Cart
+<img src="/screenshots/cart.png">
+
+### checkout
+<img src="/screenshots/checkout.png">

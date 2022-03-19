@@ -46,6 +46,7 @@ class CheckoutController extends Controller
                 $order->state=$request->state;
                 $order->zipcode=$request->zipcode;
                 $order->user_id=$user_id;
+                $order->remark=isset($request->remark)?$request->remark : 0;
                 $order->payment_mode=$request->paymentMode;
                 $order->payment_id=$request->payment_id;
                 $order->tracking_no="fundaecom". rand(1111,9999);
@@ -57,8 +58,8 @@ class CheckoutController extends Controller
                 {
                     $orderItems[]=[
                         'product_id'=>$item->product_id,
-                        'qty'=>$item->$item->product_qty,
-                        'price'=>$item->prouct->selling_price
+                        'qty'=>$item->product->quantity,
+                        'price'=>$item->product->selling_price
                     
                     ];
 
@@ -68,7 +69,7 @@ class CheckoutController extends Controller
                 }
 
                 $order->orderItems()->createMany($orderItems);
-                CArt::destroy($cart);
+                Cart::destroy($cart);
                 return response()->json([
                     'status'=>200,
                     'message'=>'Order placed successfully'
