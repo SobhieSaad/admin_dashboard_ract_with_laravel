@@ -44,12 +44,13 @@ function ViewProduct(){
             }
             return (
                 <tr key={item.id}>
+                    <td>{item.id}</td>
                     <td>{item.category.name}</td>
                     <td>{item.name}</td>
                     <td>{item.selling_price}</td>
-                    <td><img src={`https://localhost:8000/${item.image}`} width="100px" height="100" alt={item.name}/></td>
+                    <td><img src={`http://localhost:8000/${item.image}`} width="100px" height="100" alt={item.name}/></td>
                     <td>
-                        <Link to={`edit-product/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
+                        <Link to={`/admin/edit-product/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
                     </td>
                     <td>
                         {productStatus}

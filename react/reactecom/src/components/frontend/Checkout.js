@@ -221,14 +221,14 @@ function Checkout(){
                                         <div className="col-md-6">
                                             <div className="form-group mb-3">
                                                 <label> First Name </label>
-                                                <input type="text" name="fistname" onChange={handleInput} value={checkoutInput.firstname} className="form-control" />
+                                                <input type="text" name="firstname" onChange={handleInput} value={checkoutInput.firstname} className="form-control" />
                                                 <small className="text-danger">{errors?.firstname}</small>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group mb-3">
                                                 <label> Last Name </label>
-                                                <input type="text" name="lastname "  onChange={handleInput} value={checkoutInput.lastname} className="form-control" />
+                                                <input type="text" name="lastname"  onChange={handleInput} value={checkoutInput.lastname} className="form-control" />
                                                 <small className="text-danger">{errors?.lastname}</small>
                                             </div>
                                         </div>
@@ -249,7 +249,7 @@ function Checkout(){
                                         <div className="col-md-12">
                                             <div className="form-group mb-3">
                                                 <label> Full Address </label>
-                                                <textarea rows="3"   onChange={handleInput} value={checkoutInput.address}className="form-control" />
+                                                <textarea rows="3" name="address"  onChange={handleInput} value={checkoutInput.address}className="form-control" />
                                                 <small className="text-danger">{errors?.address}</small>
                                             </div>
                                         </div>
@@ -333,7 +333,7 @@ function Checkout(){
     return(
         <div>
             {/* <!-- Modal --> */}
-            <div class="modal fade" id="payOnlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="payOnlineModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
